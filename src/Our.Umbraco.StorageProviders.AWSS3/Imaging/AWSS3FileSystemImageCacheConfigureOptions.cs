@@ -55,6 +55,9 @@ public class AWSS3FileSystemImageCacheConfigureOptions : IConfigureNamedOptions<
 
         cacheOptions.BucketName = awss3FileSystemOptions.BucketName;
         cacheOptions.Region = getRegionName(awss3FileSystemOptions, _awsOptions);
+        
+        if (string.IsNullOrEmpty(cacheOptions.Region))
+            cacheOptions.Endpoint = _s3Client.Config.ServiceURL;
 
         // if ProfilesLocation added, physical assignment of the AWS credentials must be made
         if (!string.IsNullOrEmpty(_awsOptions.ProfilesLocation))
