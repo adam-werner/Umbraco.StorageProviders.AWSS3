@@ -2,7 +2,6 @@
 using System;
 using System.Threading.Tasks;
 using Amazon.S3;
-using Amazon.S3.Util;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Options;
@@ -96,11 +95,7 @@ namespace Our.Umbraco.StorageProviders.AWSS3.Imaging
         private async Task<IImageResolver?> GetResolverAsync(HttpContext context)
         {
             var fileSystemProvider = _fileSystemProvider.GetFileSystem(_name);
-
-            if (await AmazonS3Util.DoesS3BucketExistV2Async(_s3Client, _bucketName))
-                return new AWSS3StorageImageResolver(_s3Client, _bucketName, fileSystemProvider.ResolveBucketPath(context.Request.Path));
-
-            return null;
+            return new AWSS3StorageImageResolver(_s3Client, _bucketName, fileSystemProvider.ResolveBucketPath(context.Request.Path));
         }
 
         /// <inheritdoc />
