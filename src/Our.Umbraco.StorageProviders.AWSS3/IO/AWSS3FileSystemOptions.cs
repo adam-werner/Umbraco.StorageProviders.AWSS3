@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Amazon.S3;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using Amazon.S3;
 
 namespace Our.Umbraco.StorageProviders.AWSS3.IO
 {
@@ -16,7 +13,7 @@ namespace Our.Umbraco.StorageProviders.AWSS3.IO
         /// <summary>
         /// The prefix for the media files name string.
         /// </summary>
-        public const string BucketPrefix = "media";
+        public const string MediaBucketPrefix = "media";
 
         /// <summary>
         /// The region for the bucket
@@ -29,6 +26,7 @@ namespace Our.Umbraco.StorageProviders.AWSS3.IO
         /// </summary>
         [Required]
         public string BucketName { get; set; } = null!;
+        public string BucketPrefix { get; set; } = MediaBucketPrefix;
 
         /// <summary>
         /// The virtual path.

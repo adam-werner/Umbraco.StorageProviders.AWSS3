@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Amazon.S3;
+﻿using Amazon.S3;
 using Amazon.S3.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
-using Umbraco.Cms.Core.Hosting;
 using Our.Umbraco.StorageProviders.AWSS3.IO;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
+using Umbraco.Cms.Core.Hosting;
 
 namespace Our.Umbraco.StorageProviders.AWSS3
 {
@@ -64,7 +61,7 @@ namespace Our.Umbraco.StorageProviders.AWSS3
 
             var fileSystemOptions = options.Get(name);
             _rootPath = hostingEnvironment.ToAbsolute(fileSystemOptions.VirtualPath);
-            _containerRootPath = AWSS3FileSystemOptions.BucketPrefix ?? _rootPath;
+            _containerRootPath = fileSystemOptions.BucketPrefix ?? AWSS3FileSystemOptions.MediaBucketPrefix ?? _rootPath;
             _bucketName = fileSystemOptions.BucketName;
 
             _s3Client = s3Client;
