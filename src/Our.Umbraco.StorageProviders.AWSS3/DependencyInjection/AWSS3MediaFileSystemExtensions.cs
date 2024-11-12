@@ -47,6 +47,9 @@ namespace Our.Umbraco.StorageProviders.AWSS3.DependencyInjection
             // ImageSharp image provider/cache
             builder.Services.Insert(0, ServiceDescriptor.Singleton<IImageProvider, AWSS3FileSystemImageProvider>());
             builder.Services.AddUnique<IImageCache, AWSS3FileSystemImageCache>();
+            builder.Services.AddOptions<AWSS3StorageCacheOptions>(AWSS3FileSystemOptions.MediaFileSystemName);
+            builder.Services
+                .AddSingleton<IConfigureOptions<AWSS3StorageCacheOptions>, AWSS3FileSystemImageCacheConfigureOptions>();
 
             builder.SetMediaFileSystem(provider => provider.GetRequiredService<IAWSS3FileSystemProvider>()
                 .GetFileSystem(AWSS3FileSystemOptions.MediaFileSystemName));
